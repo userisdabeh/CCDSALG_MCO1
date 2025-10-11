@@ -72,9 +72,36 @@ public class Main {
 
 
     /** ========== MERGE SORT ========== */
+    public static void mergeSort(Integer[] arr, String text, int left, int right) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            mergeSort(arr, text, left, mid);
+            mergeSort(arr, text, mid + 1, right);
+            merge(arr, text, left, mid, right);
+        }
+    }
 
     /** ========== HEAP SORT ========== */
+    public static void heapSort(Integer[] arr, String text) {
+        int n = arr.length;
 
-    /** ========== EMPIRICAL TESTING ========== */
+        for (int i = n / 2 - 1; i >= 0; i--)
+            heapify(arr, text, n, i);
+
+        for (int i = n - 1; i > 0; i--) {
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+            heapify(arr, text, i, 0);
+        }
+    }
+
+    /** ========== EMPIRICAL TESTING AND UTITILITY FUNCTIONS ========== */
+    public static void runEmpiricalTest() {
+        int[] sizes = {128, 256, 512, 1024, 2048};
+        int k = 10;
+
+        System.out.println("\nEmpirical Running Time Analysis");
+        System.out.println("n\tAlgorithm\tAvg. Time (ms)\tSample Size");
 
 
