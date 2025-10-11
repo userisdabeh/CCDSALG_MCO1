@@ -8,3 +8,22 @@
 - Maglente, Michael
 - Osena, Khloe
 - Valdez, Matthew
+
+1. Generates all suffixes of a string.
+2. Sorts these suffixes using two sorting algorithms:
+Algorithm 1: Merge
+Algorithm 2: Heap Sort 
+3. Prints:
+All suffixes with indices
+Sorted suffixes with indices
+Suffix array (just indices in sorted order)
+Measures execution time for both algorithms on random DNA strings of various lengths.
+Reports results (analysis + timing table + explanation)
+
+Khloe: Main Function and Setup
+
+Person 2: Merge Sort Implemetation
+
+Person 3: Heap Sort Implementation
+
+Person 4: Empirical testing 
