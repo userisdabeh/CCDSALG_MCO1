@@ -96,6 +96,40 @@ public class Main {
         }
     }
 
+    /** ========== HEAPIFY ========== */
+    private static void heapify(Integer[] arr, String text, int n, int i) {
+        int largest = i;  
+        int left = 2 * i + 1;   
+        int right = 2 * i + 2;  
+    
+    
+        if (left < n) {
+           String leftSuffix = text.substring(arr[left]);
+           String currentSuffix = text.substring(arr[largest]);
+
+           if (leftSuffix.compareTo(currentSuffix) > 0) {
+               largest = left;
+           }
+        }
+    
+        if (right < n) {
+           String rightSuffix = text.substring(arr[right]);
+           String currentSuffix = text.substring(arr[largest]);
+
+           if (rightSuffix.compareTo(currentSuffix) > 0) {
+               largest = right;
+           }
+        }
+    
+        if (largest != i) {
+            int swap = arr[i];
+            arr[i] = arr[largest];
+            arr[largest] = swap;
+        
+            heapify(arr, text, n, largest);
+        }
+    }
+
     /** ========== EMPIRICAL TESTING AND UTITILITY FUNCTIONS ========== */
     public static void runEmpiricalTest() {
         int[] sizes = {128, 256, 512, 1024, 2048};
@@ -104,4 +138,6 @@ public class Main {
         System.out.println("\nEmpirical Running Time Analysis");
         System.out.println("n\tAlgorithm\tAvg. Time (ms)\tSample Size");
 
+    }
 
+}
