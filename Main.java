@@ -81,6 +81,51 @@ public class Main {
         }
     }
 
+    /* ============== MERGE FUNCTION ============== */
+    public static void merge(Integer[] arr, String text, int left, int mid, int right) {
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+
+        Integer[] leftArr = new Integer[n1];
+        Integer[] rightArr = new Integer[n2];
+
+        for (int i = 0; i < n1; i++) {
+            leftArr[i] = arr[left + i];
+        }
+
+        for (int i = 0; i < n2; i++) {
+            rightArr[i] = arr[mid + 1 + i];
+        }
+
+        int i = 0, j = 0, k = left;
+
+        while (i < n1 && j < n2) {
+            String leftSuffix = text.substring(leftArr[i]);
+            String rightSuffix = text.substring(rightArr[j]);
+
+            if (leftSuffix.compareTo(rightSuffix) <= 0) {
+                arr[k] = leftArr[i];
+                i++;
+            } else {
+                arr[k] = rightArr[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i < n1) {
+            arr[k] = leftArr[i];
+            i++;
+            k++;
+        }
+
+        while (j < n2) {
+            arr[k] = rightArr[j];
+            j++;
+            k++;
+        }
+    }
+
     /** ========== HEAP SORT ========== */
     public static void heapSort(Integer[] arr, String text) {
         int n = arr.length;
