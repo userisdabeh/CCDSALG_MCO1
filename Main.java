@@ -176,13 +176,72 @@ public class Main {
     }
 
     /** ========== EMPIRICAL TESTING AND UTITILITY FUNCTIONS ========== */
+
     public static void runEmpiricalTest() {
         int[] sizes = {128, 256, 512, 1024, 2048};
         int k = 10;
-
-        System.out.println("\nEmpirical Running Time Analysis");
-        System.out.println("n\tAlgorithm\tAvg. Time (ms)\tSample Size");
-
+        
+        System.out.println("\n" + "=".repeat(70));
+        System.out.println("Empirical Running Time Analysis");
+        System.out.println("=".repeat(70));
+        System.out.printf("%-10s %-20s %-20s %-15s%n", "n", "Algorithm", "Avg. Time (ms)", "Sample Size k");
+        System.out.println("-".repeat(70));
+        
+        for (int n : sizes) {
+            double totalMergeTime = 0, totalHeapTime = 0;
+            
+            for (int trial = 0; trial < k; trial++) {
+                String testString = generateRandomDNAString(n);
+                
+                totalMergeTime += measureMergeSortTime(testString);
+                totalHeapTime += measureHeapSortTime(testString);
+            }
+            
+            double avgMergeTime = totalMergeTime / k, avgHeapTime = totalHeapTime / k;
+            
+            System.out.printf("%-10d %-20s %-20.3f %-15d%n", n, "Merge Sort", avgMergeTime, k);
+            System.out.printf("%-10d %-20s %-20.3f %-15d%n", n, "Heap Sort", avgHeapTime, k);
+        }
+        
+        System.out.println("=".repeat(70));
+        System.out.println("Test complete!");
     }
 
+    public static String generateRandomDNAString(int length) {
+        Random rand = new Random();
+        char[] dna = {'a', 'c', 'g', 't'};
+        StringBuilder sb = new StringBuilder(length);
+        
+        for (int i = 0; i < length; i++) {
+            sb.append(dna[rand.nextInt(4)]);
+        }
+        
+        return sb.toString();
+    }
+    
+    public static double measureMergeSortTime(String text) {
+        int n = text.length();
+        Integer[] indices = new Integer[n];
+        for (int i = 0; i < n; i++) {
+            indices[i] = i;
+        }
+        
+        long startTime = System.nanoTime();
+        mergeSort(indices, text, 0, n - 1);
+        long endTime = System.nanoTime();
+        return (endTime - startTime) / 1e6;
+    }
+
+    public static double measureHeapSortTime(String text) {
+        int n = text.length();
+        Integer[] indices = new Integer[n];
+        for (int i = 0; i < n; i++) {
+            indices[i] = i;
+        }
+        
+        long startTime = System.nanoTime();
+        heapSort(indices, text);
+        long endTime = System.nanoTime();
+        return (endTime - startTime) / 1e6;
+    }
 }
