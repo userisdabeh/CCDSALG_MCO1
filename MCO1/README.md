@@ -1,3 +1,9 @@
+MCO2 
+OSENA:  constructor, adjacency-list initialization, addEdge, loadFromFile (graph loading and parsing). and  printMenu
+Member 2: getFriends (friend-list retrieval/formatting) and report. 
+Member 3: findConnection (BFS and path reconstruction).
+Member 4:main and runMenu (interactive flow, menu loop, packaging/testing responsibilities).
+
 # CCDSALG_MCO1
 
 ## This repository is for the official MCO1 Project in CCDSALG, AY 2025-2026.
