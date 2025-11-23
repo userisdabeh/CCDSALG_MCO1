@@ -46,6 +46,75 @@ public class CCDSALG_MCO2_GraphProject {
         sc.close();
     }
 
+    /*matthew: loads graph from file*/
+    private static CCDSALG_MCO2_GraphProject loadFromFile(String path) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(path));
+        String[] firstLine = br.readLine().trim().split("\\s+");
+        int n = Integer.parseInt(firstLine[0]);
+        int m = Integer.parseInt(firstLine[1]);
+        CCDSALG_MCO2_GraphProject graph = new CCDSALG_MCO2_GraphProject(n, m);
+        for (int i = 0; i < m; i++) {
+            String line = br.readLine();
+            if (line == null) break;
+            String[] edge = line.trim().split("\\s+");
+            int u = Integer.parseInt(edge[0]);
+            int v = Integer.parseInt(edge[1]);
+            graph.addEdge(u, v);
+        }
+        br.close();
+        return graph;
+    }
+
+    /*matthew: returns friend list for given ID*/
+    public List<Integer> getFriends(int id) {
+        if (id < 0 || id >= n) {
+            return null;
+        }
+        return adj[id];
+    }
+
+    /*matthew: menu handler*/
+    private static void runMenu(CCDSALG_MCO2_GraphProject gp, Scanner sc) {
+        boolean running = true;
+        while (running) {
+            printMenu();
+            String choice = sc.nextLine().trim();
+            
+            if (choice.equals("1")) {
+                System.out.print("Enter ID of person: ");
+                try {
+                    int id = Integer.parseInt(sc.nextLine().trim());
+                    List<Integer> friends = gp.getFriends(id);
+                    if (friends == null) {
+                        System.out.println("Error: Person ID " + id + " does not exist in the network!");
+                    } else {
+                        System.out.println("Person " + id + " has " + friends.size() + " friends!");
+                        if (friends.size() > 0) {
+                            System.out.print("List of friends: ");
+                            for (int i = 0; i < friends.size(); i++) {
+                                System.out.print(friends.get(i));
+                                if (i < friends.size() - 1) {
+                                    System.out.print(" ");
+                                }
+                            }
+                            System.out.println();
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Invalid ID format!");
+                }
+            } else if (choice.equals("2")) {
+                // Connection feature - to be implemented by another teammate
+                System.out.println("Feature not yet implemented.");
+            } else if (choice.equals("3")) {
+                running = false;
+                System.out.println("Goodbye!");
+            } else {
+                System.out.println("Invalid choice! Please enter 1, 2, or 3.");
+            }
+        }
+    }
+
 
     
 }
