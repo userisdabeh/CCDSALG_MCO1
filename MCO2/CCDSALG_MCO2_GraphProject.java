@@ -105,7 +105,22 @@ public class CCDSALG_MCO2_GraphProject {
                 }
             } else if (choice.equals("2")) {
                 // Connection feature - to be implemented by another teammate
-                System.out.println("Feature not yet implemented.");
+                System.out.print("Enter ID of first person: ");
+                int source = Integer.parseInt(sc.nextLine().trim());
+
+                System.out.print("Enter ID of second person: ");
+                int target = Integer.parseInt(sc.nextLine().trim());
+
+                List<Integer> path = gp.findConnection(source, target);
+                if (path == null) {
+                    System.out.println("Cannot find a connection between " + source + " and " + target + ".");
+                } else {
+                    System.out.println("There is a connection from " + source + " to " + target + "!");
+                    for (int i = 0; i < path.size() - 1; i++) {
+                        System.out.println(path.get(i) + " is friends with " + path.get(i+1));
+                    }
+                    System.out.println();
+                }
             } else if (choice.equals("3")) {
                 running = false;
                 System.out.println("Goodbye!");
@@ -115,6 +130,52 @@ public class CCDSALG_MCO2_GraphProject {
         }
     }
 
+    /* dave: findConnection */
+    public List<Integer> findConnection(int source, int target) {
+        if (source < 0 || source >= n || target < 0 || target >= n) {
+            return null;
+        }
+        
+        boolean[] visited = new boolean[n];
+        int[] parent = new int[n];
+        Arrays.fill(parent, -1);
 
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(source);
+        visited[source] = true;
+
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+
+            if (current == target) {
+                List<Integer> path = new ArrayList<>();
+                for (int at = target; at != -1; at = parent[at]) {
+                    path.add(at);
+                }
+                Collections.reverse(path);
+                return path;
+            }
+
+            for (int neighbor : adj[current]) {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    parent[neighbor] = current;
+                    queue.add(neighbor);
+                }
+            }
+        }
+
+        if (!visited[target]) {
+            return null;
+        }
+
+        List<Integer> path = new ArrayList<>();
+        for (int node = target; node != -1; node = parent[node]) {
+            path.add(node);
+        }
+
+        Collections.reverse(path);
+        return path;
+    }
     
 }
