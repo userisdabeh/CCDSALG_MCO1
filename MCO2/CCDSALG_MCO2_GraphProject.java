@@ -104,7 +104,6 @@ public class CCDSALG_MCO2_GraphProject {
                     System.out.println("Error: Invalid ID format!");
                 }
             } else if (choice.equals("2")) {
-                // Connection feature - to be implemented by another teammate
                 System.out.print("Enter ID of first person: ");
                 int source = Integer.parseInt(sc.nextLine().trim());
 
